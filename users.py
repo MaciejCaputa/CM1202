@@ -1,5 +1,5 @@
 """
-	@Maciej Caputa
+	@Maciej_Caputa
 """
 
 
@@ -12,7 +12,7 @@ class User:
         self.__hashedPassword = hashedPassword
 
     def __str__(self):
-        return self.__username + " (" + self.__forename + " " + self.__surname + ")"
+        return "{:14} {:7} {:10}".format(self.__username , self.__forename, self.__surname)
 
     def getUsername(self):
         return self.__username
@@ -38,8 +38,8 @@ class Lecturer(User):
         self.__school = school
         self.__modulesTaught = modulesTaught
 
-        def __str__(self):
-            return super(Lecturer, self).__str__() + "\t" + self.__school + "\t" + self.__modulesTaught
+    def __str__(self):
+        return super(Lecturer, self).__str__() + "{:6} {}".format(self.__school, self.__modulesTaught)
 
 
 class Student(User):
@@ -50,7 +50,7 @@ class Student(User):
         self.__course = course
 
     def __str__(self):
-        return super(Student, self).__str__() + "\t" + self.__year + "\t" + self.__course
+        return super(Student, self).__str__() + "{:6} {}".format(self.__year, self.__course)
 
     def getYear(self):
         return self.__year
