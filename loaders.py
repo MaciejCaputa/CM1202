@@ -2,6 +2,10 @@
     This file consits of classes that are responsible of loading details
     of accounts from csv files.
 
+    Supported Functionality:
+        +Add Account
+        +Remove Accounts
+
     @Maciej_Caputa
 """
 
@@ -20,6 +24,14 @@ class Loader:
             print(i)
 
         print()
+
+    def lookUpUsername(self, username):
+        """Looks up an username and returns his/her object. If user is not found return None"""
+        for i in self.array:
+            if i.getUsername() == username: # Assumption: username is unique!
+                return i
+
+        return None
 
 
 class AdministratorLoader(Loader):
@@ -61,10 +73,35 @@ class StudentLoader(Loader):
                 self.array.append(users.Student(username, forename, surname, hashedPassword, year, course))
 
 
+    def addAccount(self, username, forename, surname, hashedPassword, year, course):
+        if self.lookUpUsername(username) == None: # Duplicates in one file are *not* permited
+            self.array.append(users.Student(username, forename, surname, hashedPassword, year, course))
+
+            with open('database/students.csv', 'a') as csvfile: # a stands for append   
+                wrtr = csv.writer(csvfile, delimiter=',',)
+                wrtr.writerow([username, forename, surname, hashedPassword, year, course])
+        else:
+            print("Username " + username + " already exits!")
+
+
+    def removeAccount(self, username):
+        """
+        This function removes user with given username.
+        """
+        self.array.remove(self.lookUpUsername(username))
+
+        with open('database/students.csv', 'w') as csvfile:
+            for i in self.array:     
+                wrtr = csv.writer(csvfile, delimiter=',',)
+                wrtr.writerow("\n", [i.getUsername(), i.getForename(), i.getSurname(), i.getYear(), i.getCourse()])
+
+
 database = {}
 database["administrators"] = AdministratorLoader("database/administrators.csv")
 database["lecturers"] = LecturerLoader("database/lecturers.csv")
 database["students"] = StudentLoader("database/students.csv")
+
+database["students"].addAccount("webMattson2", "Natan", "Caputa", "qwerty", 1, "BSc hons Computing and Mathematics")
 
 # This is just for tesing purposes
 database["administrators"].display()
