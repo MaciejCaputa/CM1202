@@ -14,6 +14,23 @@ class Lesson:
     def is_available():
         pass
 
+    def __str__(self):
+        """
+        For testing purposes
+        """
+        # return "{}, {}: {} paragraphs".format(self.content.title, self.module,
+        #                                       len(self.content.paragraphs))
+        title = "{}, {}, {}".format(self.content.title, self.topic, self.module)
+        o = title + "\n"
+        o += "-" * len(title) + "\n"
+        o += self.content.introduction + "\n"
+        for i in self.content.paragraphs:
+            o += i.body + "\n"
+            o += "[Image: {}, Link: {}]".format(i.image, i.link)
+            o += "\n\n"
+        o += self.content.summary + "\n"
+        return o
+
 
 class Content:
     def __init__(self, title, introduction, paragraphs, summary):
