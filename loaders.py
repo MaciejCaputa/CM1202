@@ -161,6 +161,7 @@ class LessonLoader:
 
         print()
 
+<<<<<<< HEAD
 
     def logIn(self, username, password):
         for user in self.array:
@@ -173,6 +174,8 @@ class LessonLoader:
 
         return False
 
+=======
+>>>>>>> f01947a93b9887f2b8a157e9050ae8735bdedf78
 
 database = {}
 database["administrators"] = AdministratorLoader("database/administrators.csv")
@@ -182,9 +185,15 @@ database["students"] = StudentLoader("database/students.csv")
 #database["students"].addAccount("webMattson2", "Natan", "Caputa", "qwerty", 1, "BSc hons Computing and Mathematics")
 
 # This is just for tesing purposes
+<<<<<<< HEAD
 #database["administrators"].display()
 #database["lecturers"].display()
 #database["students"].display()
+=======
+database["administrators"].display()
+database["lecturers"].display()
+database["students"].display()
+>>>>>>> f01947a93b9887f2b8a157e9050ae8735bdedf78
 
 database["lessons"] = LessonLoader(["database/lessons/prob.yaml"])
 database["lessons"].display()
