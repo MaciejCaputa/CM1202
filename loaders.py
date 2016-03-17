@@ -5,6 +5,7 @@
     Supported Functionality:
         +Add Account
         +Remove Accounts
+        +Search Account
 
     @Maciej_Caputa
 """
@@ -29,11 +30,11 @@ class Loader:
 
     def searchUsername(self, username):
         """Looks up an username and returns his/her object. If user is not found return None"""
-        for i in self.array:
+        for user in self.array:
             print(username)
-            print(i.getUsername())
-            if i.getUsername() == username: # Assumption: username is unique!
-                return i
+            print(user.getUsername())
+            if user.getUsername() == username: # Assumption: username is unique!
+                return user
 
         return None
 

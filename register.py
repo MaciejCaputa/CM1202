@@ -38,7 +38,7 @@ class RegisterStudent(tk.Frame):
 
     def register(self):
         print(self.entry)
-        Username    = self.entry[0].get()
+        username    = self.entry[0].get()
         forename    = self.entry[1].get()
         surname     = self.entry[2].get()
         password    = self.entry[3].get()
