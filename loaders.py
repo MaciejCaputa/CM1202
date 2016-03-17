@@ -8,13 +8,15 @@
 
     @Maciej_Caputa
 """
+import yaml
 
 import users
+from lesson import Lesson, Content, Paragraph
 import csv
 
 
 class Loader:
-    """docstring for ClassName"""
+    """General definition of loader and common methods."""
     def __init__(self):
         self.array = []
 
@@ -35,9 +37,18 @@ class Loader:
 
         return None
 
+    def logIn(self, username, password):
+        if self.searchUsername(username) == None:
+            return False
+
+        if self.searchUsername(username).getPassword() == password:
+            return True
+
+        return False
+
 
 class AdministratorLoader(Loader):
-    """docstring for Loader"""
+    """Loading administators' database"""
     def __init__(self, fileName):
         super(AdministratorLoader, self).__init__()
 
@@ -79,7 +90,7 @@ class StudentLoader(Loader):
         if self.searchUsername(username) == None: # Duplicates in one file are *not* permited
             self.array.append(users.Student(username, forename, surname, hashedPassword, year, course))
 
-            with open('database/students.csv', 'a') as csvfile: # a stands for append   
+            with open('database/students.csv', 'a') as csvfile: # a stands for append
                 wrtr = csv.writer(csvfile, delimiter=',',)
                 wrtr.writerow([username, forename, surname, hashedPassword, year, course])
             return True
@@ -94,9 +105,61 @@ class StudentLoader(Loader):
         self.array.remove(self.lookUpUsername(username))
 
         with open('database/students.csv', 'w') as csvfile:
-            for i in self.array:     
+            for i in self.array:
                 wrtr = csv.writer(csvfile, delimiter=',',)
                 wrtr.writerow("\n", [i.getUsername(), i.getForename(), i.getSurname(), i.getYear(), i.getCourse()])
+
+class LessonLoader:
+    """
+    Class to load Lesson objects
+    """
+    def __init__(self, filenames):
+        """
+        Load each lesson in the list of filenames provided
+        """
+        self.array = []
+
+        for filename in filenames:
+            with open(filename) as f:
+                # data is a dictionary containing the lesson data
+                data = yaml.load(f)
+
+                # Create the Paragraph objects
+                paragraphs = []
+                for i in data["content"]["paragraphs"]:
+                    # Image and link are optional so set to None if not present
+                    image = i["image"] if "image" in i else None
+                    link = i["link"] if "link" in i else None
+
+                    p = Paragraph(i["body"], image, link)
+                    paragraphs.append(p)
+
+                # Create the Content object
+                content = Content(data["content"]["title"],
+                                  data["content"]["introduction"],
+                                  paragraphs,
+                                  data["content"]["summary"])
+                # Create the actual Lesson
+                self.array.append(Lesson(data["id"], data["topic"],
+                                         data["module"], content))
+
+    def get_lesson(id):
+        """
+        Return the lesson object with the specified ID, or None if no such
+        lesson is found
+        """
+        for i in self.array:
+            if i.lesson_ID == id:
+                return i
+
+        return None
+
+    def display(self):
+        print()
+        for i in self.array:
+            print(i)
+
+        print()
 
 
     def logIn(self, username, password):
@@ -123,9 +186,8 @@ database["students"] = StudentLoader("database/students.csv")
 #database["lecturers"].display()
 #database["students"].display()
 
-
-
-
+database["lessons"] = LessonLoader(["database/lessons/prob.yaml"])
+database["lessons"].display()
 
 
 

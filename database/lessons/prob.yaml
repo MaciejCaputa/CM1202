@@ -1,0 +1,19 @@
+id: 1
+topic: "Probability"
+module: "CM1103"
+content:
+  title: "Introduction to probability"
+  introduction: >
+                This is the introduction. I am Stuart Allen.
+
+  paragraphs:
+    - body: "This is the first paragraph."
+      image: "pic1.png"
+
+    - body: "Paragrpah 2 here. blah blah blah"
+      image: "pic2.jpg"
+      link: "wwww.stuartallen.com"
+
+  summary: >
+           Summary of the great lesson here
+
