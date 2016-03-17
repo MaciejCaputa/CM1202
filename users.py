@@ -23,6 +23,9 @@ class User:
     def getSurname(self):
         return self.__surname
 
+    def getPassword(self):
+        return self.__hashedPassword
+
 
 class Administrator(User):
     """docstring for ClassName"""

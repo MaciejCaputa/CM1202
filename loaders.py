@@ -25,9 +25,11 @@ class Loader:
 
         print()
 
-    def lookUpUsername(self, username):
+    def searchUsername(self, username):
         """Looks up an username and returns his/her object. If user is not found return None"""
         for i in self.array:
+            print(username)
+            print(i.getUsername())
             if i.getUsername() == username: # Assumption: username is unique!
                 return i
 
@@ -74,14 +76,15 @@ class StudentLoader(Loader):
 
 
     def addAccount(self, username, forename, surname, hashedPassword, year, course):
-        if self.lookUpUsername(username) == None: # Duplicates in one file are *not* permited
+        if self.searchUsername(username) == None: # Duplicates in one file are *not* permited
             self.array.append(users.Student(username, forename, surname, hashedPassword, year, course))
 
             with open('database/students.csv', 'a') as csvfile: # a stands for append   
                 wrtr = csv.writer(csvfile, delimiter=',',)
                 wrtr.writerow([username, forename, surname, hashedPassword, year, course])
+            return True
         else:
-            print("Username " + username + " already exits!")
+            return False
 
 
     def removeAccount(self, username):
@@ -96,17 +99,29 @@ class StudentLoader(Loader):
                 wrtr.writerow("\n", [i.getUsername(), i.getForename(), i.getSurname(), i.getYear(), i.getCourse()])
 
 
+    def logIn(self, username, password):
+        for user in self.array:
+            print(user.getPassword())
+            print(username == user.getUsername())
+            print(password == user.getPassword())
+            if username == user.getUsername() and password == user.getPassword():
+                print(username, password)
+                return True
+
+        return False
+
+
 database = {}
 database["administrators"] = AdministratorLoader("database/administrators.csv")
 database["lecturers"] = LecturerLoader("database/lecturers.csv")
 database["students"] = StudentLoader("database/students.csv")
 
-database["students"].addAccount("webMattson2", "Natan", "Caputa", "qwerty", 1, "BSc hons Computing and Mathematics")
+#database["students"].addAccount("webMattson2", "Natan", "Caputa", "qwerty", 1, "BSc hons Computing and Mathematics")
 
 # This is just for tesing purposes
-database["administrators"].display()
-database["lecturers"].display()
-database["students"].display()
+#database["administrators"].display()
+#database["lecturers"].display()
+#database["students"].display()
 
 
 
