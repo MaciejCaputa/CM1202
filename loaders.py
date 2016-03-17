@@ -161,23 +161,12 @@ class LessonLoader:
 
         print()
 
-    def logIn(self, username, password):
-        for user in self.array:
-            print(user.getPassword())
-            print(username == user.getUsername())
-            print(password == user.getPassword())
-            if username == user.getUsername() and password == user.getPassword():
-                print(username, password)
-                return True
-
-        return False
 
 database = {}
 database["administrators"] = AdministratorLoader("database/administrators.csv")
 database["lecturers"] = LecturerLoader("database/lecturers.csv")
 database["students"] = StudentLoader("database/students.csv")
 database["lessons"] = LessonLoader(["database/lessons/prob.yaml"])
-database["lessons"].display()
 
 
 
