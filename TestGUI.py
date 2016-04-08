@@ -23,8 +23,8 @@ class TestGUI(tk.Frame):
         print("test")
         i = 1
         for idx, question in enumerate(test.getNextQuestion(), start=0): # usage of Test class generator (yielding)
-            task = Label(self, text = (str(idx + 1) + ". " + question.getQuestionText()), font = ('MS', 10, 'bold'))
-            task.grid(row = idx * 10, column = 0, columnspan = 2)
+            task = Label(self, text = (str(idx + 1) + ". " + question.getQuestionText()), font = ('MS', 10, 'bold'), justify=LEFT, wraplength=500)
+            task.grid(row = idx * 10 + 1, column = 1, columnspan = 2)
             
 
             if (question.isQuestionMultipleChoice()):
@@ -37,19 +37,19 @@ class TestGUI(tk.Frame):
 
                 # Displaying answers
                 for i in range(4):
-                    radio[i] = Radiobutton(self, variable = self.var, value = 1)
-                    radio[i].grid(row = idx * 10 + 1 + i, column = 0)
+                    radio[i] = Radiobutton(self, variable = self.var, value = i + 1)
+                    radio[i].grid(row = idx * 10 + 2 + i, column = 1, sticky=E)
                     answer[i] = Label(self, text = options[i], font = ('MS', 10, 'bold'))
-                    answer[i].grid(row = idx * 10 + 1 + i, column = 1, sticky=W)
+                    answer[i].grid(row = idx * 10 + 2 + i, column = 2, sticky=W)
 
                 mark = Label(self, text = '(' + str(question.getAvailableMarks()) + ' marks)', font = ('MS', 10, 'bold'))
-                mark.grid(row = idx * 10 + 5, column = 3, columnspan = 1)
+                mark.grid(row = idx * 10 + 6, column = 2, sticky=E)
             
                 butSubmit = Button(self, text = 'Submit', font = ('MS', 10,'bold'))
                 butSubmit['command'] = self.evaluateAnswer
-                butSubmit.grid(row = idx * 10 + 6, column = 3)
+                butSubmit.grid(row = idx * 10 + 7, column = 2, sticky=E)
                 
             else:       
                 self.entAns = Entry(self)
-                self.entAns.grid(row = idx * 8 + 1, column = 1, columnspan = 2, sticky = E)
+                self.entAns.grid(row = idx * 10 + 2, column = 1)
             
