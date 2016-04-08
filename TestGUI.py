@@ -20,50 +20,36 @@ class TestGUI(tk.Frame):
     
     def createTestQuestion(self, test):
 #         for q in test.getNextQuestion():
-        
-        q = next(test.getNextQuestion())
-        
-        lblStrQ1 = Label(self, text = (q.getQuestionText()), font = ('MS', 10, 'bold'))
-        lblStrQ1.grid(row = 2, column = 1, columnspan = 5)
-    
-        if (q.isQuestionMultipleChoice()):
-            options = q.getOptions()
+        print("test")
+        i = 1
+        for idx, question in enumerate(test.getNextQuestion(), start=0): # usage of Test class generator (yielding)
+            task = Label(self, text = (str(idx + 1) + ". " + question.getQuestionText()), font = ('MS', 10, 'bold'))
+            task.grid(row = idx * 10, column = 0, columnspan = 2)
             
-            lblStrA1 = Label(self, text = options[0], font = ('MS', 10, 'bold'))
-            lblStrA1.grid(row = 4, column = 1, columnspan = 1)
+
+            if (question.isQuestionMultipleChoice()):
+                options = question.getOptions()
+                radio  = [None] * 4
+                answer = [None] * 4
+
+                
+                self.var = IntVar()
+
+                # Displaying answers
+                for i in range(4):
+                    radio[i] = Radiobutton(self, variable = self.var, value = 1)
+                    radio[i].grid(row = idx * 10 + 1 + i, column = 0)
+                    answer[i] = Label(self, text = options[i], font = ('MS', 10, 'bold'))
+                    answer[i].grid(row = idx * 10 + 1 + i, column = 1, sticky=W)
+
+                mark = Label(self, text = '(' + str(question.getAvailableMarks()) + ' marks)', font = ('MS', 10, 'bold'))
+                mark.grid(row = idx * 10 + 5, column = 3, columnspan = 1)
             
-            lblStrA2 = Label(self, text = options[1], font = ('MS', 10, 'bold'))
-            lblStrA2.grid(row = 5, column = 1, columnspan = 1)
+                butSubmit = Button(self, text = 'Submit', font = ('MS', 10,'bold'))
+                butSubmit['command'] = self.evaluateAnswer
+                butSubmit.grid(row = idx * 10 + 6, column = 3)
+                
+            else:       
+                self.entAns = Entry(self)
+                self.entAns.grid(row = idx * 8 + 1, column = 1, columnspan = 2, sticky = E)
             
-            lblStrA3 = Label(self, text = options[2], font = ('MS', 10, 'bold'))
-            lblStrA3.grid(row = 6, column = 1, columnspan = 1)
-            
-            lblStrA4 = Label(self, text = options[3], font = ('MS', 10, 'bold'))
-            lblStrA4.grid(row = 7, column = 1, columnspan = 1)
-            
-            
-            lblStrM1 = Label(self, text = '(' + str(q.getAvailableMarks()) + ' marks)', font = ('MS', 10, 'bold'))
-            lblStrM1.grid(row = 8, column = 6, columnspan = 1)
-            
-            butSubmit = Button(self, text = 'Submit', font = ('MS', 10,'bold'))
-            butSubmit['command'] = self.evaluateAnswer
-            butSubmit.grid(row = 10, column = 6, columnspan = 1)
-            
-            self.varQ1 = IntVar()
-            
-            R1Q1 = Radiobutton(self, variable = self.varQ1, value = 1)
-            R1Q1.grid(row = 4, column = 2)
-            
-            R2Q1 = Radiobutton(self, variable = self.varQ1, value = 2)
-            R2Q1.grid(row = 5, column = 2)
-            
-            R3Q1 = Radiobutton(self, variable = self.varQ1, value = 3)
-            R3Q1.grid(row = 6, column = 2)
-            
-            R4Q1 = Radiobutton(self, variable = self.varQ1, value = 4)
-            R4Q1.grid(row = 7, column = 2)
-            
-        else:       
-            self.entAns = Entry(self)
-            self.entAns.grid(row = 4, column = 3, columnspan = 2, sticky = E)
-        
