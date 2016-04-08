@@ -12,19 +12,20 @@ class TestGUI(tk.Frame):
     
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.controller = controller
+        self.controller.title("Test")
+        self.displayTest(Test.getTest("1"))
 
-        self.createTestQuestion(Test.getTest("1"))
 
     def evaluateAnswer(self):
             pass
     
-    def createTestQuestion(self, test):
-#         for q in test.getNextQuestion():
-        print("test")
-        i = 1
+    def displayTest(self, test):
+
+
         for idx, question in enumerate(test.getNextQuestion(), start=0): # usage of Test class generator (yielding)
-            task = Label(self, text = (str(idx + 1) + ". " + question.getQuestionText()), font = ('MS', 10, 'bold'), justify=LEFT, wraplength=500)
-            task.grid(row = idx * 10 + 1, column = 1, columnspan = 2)
+            task = Label(self, text = "Task " + (str(idx + 1) + ". " + question.getQuestionText()), font = ('MS', 10, 'bold'), justify=LEFT, wraplength=500)
+            task.grid(row = idx * 10 + 1, column = 1, columnspan = 7)
             
 
             if (question.isQuestionMultipleChoice()):
@@ -38,18 +39,19 @@ class TestGUI(tk.Frame):
                 # Displaying answers
                 for i in range(4):
                     radio[i] = Radiobutton(self, variable = self.var, value = i + 1)
-                    radio[i].grid(row = idx * 10 + 2 + i, column = 1, sticky=E)
+                    radio[i].grid(row = idx * 10 + 2, column = i * 2 + 1, sticky=E)
                     answer[i] = Label(self, text = options[i], font = ('MS', 10, 'bold'))
-                    answer[i].grid(row = idx * 10 + 2 + i, column = 2, sticky=W)
+                    answer[i].grid(row = idx * 10 + 2, column = i * 2 + 2, sticky=W)
 
-                mark = Label(self, text = '(' + str(question.getAvailableMarks()) + ' marks)', font = ('MS', 10, 'bold'))
-                mark.grid(row = idx * 10 + 6, column = 2, sticky=E)
-            
-                butSubmit = Button(self, text = 'Submit', font = ('MS', 10,'bold'))
-                butSubmit['command'] = self.evaluateAnswer
-                butSubmit.grid(row = idx * 10 + 7, column = 2, sticky=E)
-                
             else:       
                 self.entAns = Entry(self)
-                self.entAns.grid(row = idx * 10 + 2, column = 1)
-            
+                self.entAns.grid(row = idx * 10 + 2, column = 1, columnspan=4)
+
+
+            mark = Label(self, text = '(' + str(question.getAvailableMarks()) + ' marks)', font = ('MS', 10, 'bold'))
+            mark.grid(row = idx * 10 + 6, column = 8, sticky=E)
+        
+            butSubmit = Button(self, text = 'Submit', font = ('MS', 10,'bold'))
+            butSubmit['command'] = self.evaluateAnswer
+            butSubmit.grid(row = idx * 10 + 7, column = 8, sticky=E)
+        
