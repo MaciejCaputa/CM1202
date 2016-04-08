@@ -1,17 +1,20 @@
+import tkinter as tk
+import tkinter.messagebox as tm
+import loaders
 from tkinter import *
 from Test import Test
 
-class TestGUI(Frame):
-    '''
-    GUI class for Tests
-    '''
+TITLE_FONT = ("Helvetica", 18, "bold")
 
+# Administrator account can be only created by software package programmer,
+# therefore adding administrator acount is not allowed.
+class TestGUI(tk.Frame):
+    
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
 
-    def __init__(self, master):
-        Frame.__init__(self, master)
-        self.grid()
         self.createTestQuestion(Test.getTest("1"))
-       
+
     def evaluateAnswer(self):
             pass
     
@@ -60,12 +63,7 @@ class TestGUI(Frame):
             R4Q1 = Radiobutton(self, variable = self.varQ1, value = 4)
             R4Q1.grid(row = 7, column = 2)
             
-        else:
-            
+        else:       
             self.entAns = Entry(self)
             self.entAns.grid(row = 4, column = 3, columnspan = 2, sticky = E)
         
-root = Tk()
-root.title("Test Name")
-app = TestGUI(root)
-root.mainloop()

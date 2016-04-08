@@ -5,6 +5,7 @@ import loaders
 from LogIn import *
 from Register import *
 from HomePage import *
+from TestGUI import *
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 
@@ -24,7 +25,7 @@ class GUI(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (LogIn, Register, HomePage, Lessons, ViewLesson, TakeTest):
+        for F in (LogIn, Register, HomePage, Lessons, ViewLesson, TakeTest, TestGUI):
             page_name = F.__name__
             frame = F(container, self)
             self.frames[page_name] = frame
@@ -94,9 +95,10 @@ class ViewLesson(tk.Frame):
                            command=lambda: controller.show_frame("HomePage"))
 
         button2 = tk.Button(self, text="Take Test",
-                   command=lambda: controller.show_frame("TakeTest"))
+                   command=lambda: controller.show_frame("TestGUI"))
 
         button1.grid(row=8, columnspan=2)
+        button2.grid(row=9, columnspan=2)
 
 
 class TakeTest(tk.Frame):
