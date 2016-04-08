@@ -1,7 +1,10 @@
 import tkinter as tk
 import tkinter.messagebox as tm
 import loaders
-from register import * 
+
+from LogIn import *
+from Register import *
+from HomePage import *
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 
@@ -21,7 +24,7 @@ class GUI(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (LogIn, RegisterStudent, HomePage, ViewLessons, TakeTests):
+        for F in (LogIn, Register, HomePage, Lessons, ViewLesson, TakeTest):
             page_name = F.__name__
             frame = F(container, self)
             self.frames[page_name] = frame
@@ -31,8 +34,6 @@ class GUI(tk.Tk):
             # will be the one that is visible.
             frame.grid(row=0, column=0, sticky="nsew")
 
-            #frame.pack(expand=True)
-
         self.show_frame("LogIn")
 
     def show_frame(self, page_name):
@@ -41,87 +42,64 @@ class GUI(tk.Tk):
         frame.tkraise()
 
 
-class LogIn(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-
-        self.controller.title("Log In")
-
-        self.label = tk.Label(self, text="Log In", font=TITLE_FONT)
-        self.label.grid(columnspan=2)
-
-
-        self.label1 = tk.Label(self, text="Username")
-        self.label2 = tk.Label(self, text="Password")
-
-        self.entry1 = tk.Entry(self)
-        self.entry2 = tk.Entry(self, show="*")
-
-        self.label1.grid(row=1, column=0)
-        self.label2.grid(row=2, column=0)
-        self.entry1.grid(row=1, column=1)
-        self.entry2.grid(row=2, column=1)
-
-        self.button1 = tk.Button(self, text="Login",
-                            command=self.log_in)
-        self.button1.grid(columnspan=2)
-
-        self.button2 = tk.Button(self, text="Create new student account",
-                            command=lambda : self.controller.show_frame("RegisterStudent"))
-        self.button2.grid(columnspan=2)
-
-
-        self.pack()
-
-    def register(self):
-        self.controller.show_frame("Register")
-
-    def log_in(self):
-        #print("Clicked")
-        username = self.entry1.get()
-        password = self.entry2.get()
-
-        print(username, password)
-
-        if loaders.database["students"].logIn(username, password):
-            tm.showinfo("Login info", "Welcome " + username)
-
-            self.controller.show_frame("HomePage")
-
-        else:
-            tm.showerror("Login error", "Incorrect username or password")
-
-
-class HomePage(tk.Frame):
+class Lessons(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="Home Page", font=TITLE_FONT)
+        label = tk.Label(self, text="Lessons", font=TITLE_FONT)
         label.pack(side="top", fill="x", pady=10)
 
-        button1 = tk.Button(self, text="View Lessons",
-                            command=lambda: controller.show_frame("ViewLessons"))
-        button2 = tk.Button(self, text="Take Tests",
-                            command=lambda: controller.show_frame("TakeTests"))
+        button1 = tk.Button(self, text="Probability",
+                            command=lambda: controller.show_frame("ViewLesson"))
+        
+        button2 = tk.Button(self, text="Counting",
+                            command=lambda: controller.show_frame("ViewLesson"))
+
+        button3 = tk.Button(self, text="Go to the home page",
+                            command=lambda: controller.show_frame("HomePage"))
+
+        
         button1.pack()
         button2.pack()
+        button3.pack()
 
 
-class ViewLessons(tk.Frame):
 
-    def __init__(self, parent, controller):
+class ViewLesson(tk.Frame):
+
+    def __init__(self, parent, controller):      
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="View Lessons", font=TITLE_FONT)
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the home page",
+
+        # constant id just for testing purposes, it will go into __init__
+        lesson = loaders.database["lessons"].get_lesson(1)
+        self.controller.title(lesson.topic + "(" + lesson.module + ")")
+        self.title = tk.Label(self, text=lesson.topic + "(" + lesson.module + ")", font=TITLE_FONT)
+        self.title.grid(columnspan=2)
+
+        
+        
+
+        self.label = [None] * 6
+        self.label[0] = tk.Label(self, text="test")
+        self.label[1] = tk.Label(self, text=loaders.database["lessons"].get_lesson(1).content.introduction)
+
+
+        for i in range(2):
+            self.label[i].grid(row=i+1, column=0)
+        
+
+        button1 = tk.Button(self, text="Go to the lessons",
                            command=lambda: controller.show_frame("HomePage"))
-        button.pack()
+
+        button2 = tk.Button(self, text="Take Test",
+                   command=lambda: controller.show_frame("TakeTest"))
+
+        button1.grid(row=8, columnspan=2)
 
 
-class TakeTests(tk.Frame):
+class TakeTest(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)

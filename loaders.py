@@ -49,7 +49,9 @@ class Loader:
 
 
 class AdministratorLoader(Loader):
-    """Loading administators' database"""
+    """
+    Loading administators' records
+    """
     def __init__(self, fileName):
         super(AdministratorLoader, self).__init__()
 
@@ -62,7 +64,9 @@ class AdministratorLoader(Loader):
 
 
 class LecturerLoader(Loader):
-    """docstring for Loader"""
+    """
+    Class to load lecturers' records
+    """
     def __init__(self, fileName):
         super(LecturerLoader, self).__init__()
 
@@ -75,7 +79,9 @@ class LecturerLoader(Loader):
 
 
 class StudentLoader(Loader):
-    """docstring for Loader"""
+    """
+    Class to load students' records
+    """
     def __init__(self, fileName):
         super(StudentLoader, self).__init__()
 
@@ -144,7 +150,7 @@ class LessonLoader:
                 self.array.append(Lesson(data["id"], data["topic"],
                                          data["module"], content))
 
-    def get_lesson(id):
+    def get_lesson(self, id):
         """
         Return the lesson object with the specified ID, or None if no such
         lesson is found
@@ -164,12 +170,10 @@ class LessonLoader:
 
 
 database = {}
-database["administrators"] = AdministratorLoader("database/administrators.csv")
-database["lecturers"] = LecturerLoader("database/lecturers.csv")
-database["students"] = StudentLoader("database/students.csv")
-database["lessons"] = LessonLoader(["database/lessons/prob.yaml"])
-
-
-
-
-
+database["administrators"]  = AdministratorLoader("database/administrators.csv")
+database["lecturers"]       = LecturerLoader("database/lecturers.csv")
+database["students"]        = StudentLoader("database/students.csv")
+database["lessons"]         = LessonLoader(["database/lessons/prob.yaml"])
+#print(database["lessons"].display())
+print("-" * 10)
+print(database["lessons"].array[0].lesson_ID)
