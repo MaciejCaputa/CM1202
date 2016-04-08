@@ -6,7 +6,7 @@ TITLE_FONT = ("Helvetica", 18, "bold")
 
 # Administrator account can be only created by software package programmer,
 # therefore adding administrator acount is not allowed.
-class RegisterStudent(tk.Frame):
+class Register(tk.Frame):
     
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
