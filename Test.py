@@ -1,34 +1,47 @@
 import csv
 from Question import Question
         
-        
 class Test():
-    _createdTests = {} #dictionary of all created Tests
         
     '''
     Class to represent a Test
     '''
     
+    _createdTests = {} #dictionary of all created Tests
+    
     @classmethod
     def _loadTests(cls, filename):
-        with open(filename) as csvfile:
-            rdr = csv.reader(csvfile)
-            next(rdr, None)
-            
-            for row in rdr:
-                testQuestions = []
+        CSV_ID = 0
+        CSV_MODULE = 1
+        CSV_TOPIC = 2
+        CSV_NAME = 3
+        CSV_INTRODUCTIONTEXT = 4
+        CSV_QUESTIONIDS = 5
+        
+        try:
+            with open(filename) as csvfile:
+                rdr = csv.reader(csvfile)
+                next(rdr, None)
                 
-                for q in row[5:]:
-                    testQuestions.append(Question.getQuestion(q))
-                                  
-                cls._createdTests[row[0]] = Test(row[0], row[1], row[2], row[3], row[4], testQuestions)
+                for row in rdr:
+                    testQuestions = []
+                    
+                    for q in row[CSV_QUESTIONIDS:]:
+                        testQuestions.append(Question.getQuestion(q))
+                                      
+                    cls._createdTests[row[CSV_ID]] = Test(row[CSV_ID], row[CSV_MODULE], row[CSV_TOPIC], row[CSV_NAME], row[CSV_INTRODUCTIONTEXT], testQuestions)
+        except csv.Error: ###WHICH EXCEPION TO RAISE???
+            return None
     
     @classmethod
     def getTest(cls, test_ID):
-        if len(cls._createdTests) == 0:
-            cls._loadTests("Test.csv")
-            
-        return cls._createdTests[test_ID]
+        try:
+            if len(cls._createdTests) == 0:
+                cls._loadTests("Test.csv")
+                
+            return cls._createdTests[test_ID]
+        except KeyError:
+            return None
     
     #Instance Methods
     def __init__(self, test_ID, module, topic, testName, introductionText, questions):
@@ -63,7 +76,10 @@ class Test():
             self._studentFinalAnswers[studentID] = question.marksAwarded(studentID)
     
     def getTestResult(self, studentID):
-        return self._studentFinalAnswers[studentID]
+        try:
+            return self._studentFinalAnswers[studentID]
+        except KeyError:
+            return None
     
     def getNextQuestion(self):
         for q in self._testQuestions:

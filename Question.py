@@ -1,42 +1,57 @@
 import csv
-
-INCORRECTANSWERMARKS = 0
-        
-        
+            
 class Question():
-    _createdQuestions = {} #dictionary of all created questions with ID and Question
         
     '''
     Class to represent a Question
     '''
     
+    _createdQuestions = {} #dictionary of all created questions with ID and Question
+    
     @classmethod
     def _loadQuestions(cls, filename):
-        with open(filename) as csvfile:
-            rdr = csv.reader(csvfile)
-            next(rdr, None)
-            
-            for row in rdr:
-                if row[1] == "MC":
-                    cls._createdQuestions[row[0]] = multipleChoice(row[0], row[2], row[3], row[4], row[5], row[6], row[8:])
-                else:  
-                    cls._createdQuestions[row[0]] = openQuestion(row[0], row[2], row[3], row[4], row[5], row[6])
-                     
+        CSV_ID = 0
+        CSV_TYPE = 1
+        CSV_MODULE = 2 
+        CSV_TOPIC = 3
+        CSV_TEXT = 4
+        CSV_CORRECTANSWER = 5
+        CSV_MARKS = 6
+        CSV_INCORRECTANSWERMARKS = 7
+        CSV_OPTIONS = 9
+        
+        try:
+            with open(filename) as csvfile:
+                rdr = csv.reader(csvfile)
+                next(rdr, None)
+                
+                for row in rdr:
+                    if row[CSV_TYPE] == "MC":
+                        cls._createdQuestions[row[CSV_ID]] = multipleChoice(row[CSV_ID], row[CSV_MODULE], row[CSV_TOPIC], row[CSV_TEXT], row[CSV_CORRECTANSWER], row[CSV_MARKS], row[CSV_INCORRECTANSWERMARKS], row[CSV_OPTIONS:])
+                    else:  
+                        cls._createdQuestions[row[CSV_ID]] = openQuestion(row[CSV_ID], row[CSV_MODULE], row[CSV_TOPIC], row[CSV_TEXT], row[CSV_CORRECTANSWER], row[CSV_MARKS], row[CSV_INCORRECTANSWERMARKS])
+        except csv.Error:
+            return None
+        
     @classmethod
     def getQuestion(cls, question_ID):
-        if len(cls._createdQuestions) == 0:
-            cls._loadQuestions("Questions.csv")
-            
-        return cls._createdQuestions[question_ID]
+        try:
+            if len(cls._createdQuestions) == 0:
+                cls._loadQuestions("Questions.csv")
+                
+            return cls._createdQuestions[question_ID]
+        except KeyError:
+            return None
     
     #Instance Methods
-    def __init__(self, question_ID, module, topic, questionText, correctAnswer, marks):
+    def __init__(self, question_ID, module, topic, questionText, correctAnswer, marks, incorrectAnswerMarks):
         self._question_ID = question_ID
         self._module = module
         self._topic = topic
         self._questionText = questionText
         self._correctAnswer = correctAnswer
         self._availableMarks = int(marks)
+        self.incorrectAnswerMarks = int(incorrectAnswerMarks)
         self._studentFinalAnswers = {}
         Question._createdQuestions[self._question_ID] = self
     
@@ -70,13 +85,19 @@ class Question():
         return self._availableMarks
     
     def getSubmittedAnswer(self, studentID):
-        return self._studentFinalAnswers[studentID][0]
+        try:
+            return self._studentFinalAnswers[studentID][0]
+        except KeyError:
+            return None
     
     def marksAwarded(self, studentID):
-        if self._studentFinalAnswers[studentID][1] == True: 
-            return self._availableMarks
-        else:
-            return INCORRECTANSWERMARKS
+        try:
+            if self._studentFinalAnswers[studentID][1] == True: 
+                return self._availableMarks
+            else:
+                return self.incorrectAnswerMarks
+        except KeyError:
+            return None
     
     def isAnswerCorrect(self, studentID, studentAnswer):
         if self._correctAnswer == studentAnswer: 
@@ -93,8 +114,8 @@ class openQuestion(Question):
     Class to represent an Open Question
     '''
     
-    def __init__(self, question_ID, module, topic, questionText, correctAnswer, marks):
-        super().__init__(question_ID, module, topic, questionText, correctAnswer, marks)
+    def __init__(self, question_ID, module, topic, questionText, correctAnswer, marks, incorrectAnswerMarks):
+        super().__init__(question_ID, module, topic, questionText, correctAnswer, marks, incorrectAnswerMarks)
     
     def createQuestionAnswer(self, filename, answerTemplateNumber):
         with open(self.filenme) as csvfile:
@@ -113,8 +134,8 @@ class multipleChoice(Question):
     Class to represent a Multiple Choice Question
     '''
     
-    def __init__(self, question_ID, module, topic, questionText, correctAnswer, marks, options): #constructor
-        super().__init__(question_ID, module, topic, questionText, correctAnswer, marks)
+    def __init__(self, question_ID, module, topic, questionText, correctAnswer, marks, incorrectAnswerMarks, options): #constructor
+        super().__init__(question_ID, module, topic, questionText, correctAnswer, marks, incorrectAnswerMarks)
         self._options = options
     
     def createQuestionAnswers(self, filename, answerTemplateNumber, numberOfAnswers): #returns a list of answers
