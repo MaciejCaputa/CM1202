@@ -173,7 +173,8 @@ database = {}
 database["administrators"]  = AdministratorLoader("database/administrators.csv")
 database["lecturers"]       = LecturerLoader("database/lecturers.csv")
 database["students"]        = StudentLoader("database/students.csv")
-database["lessons"]         = LessonLoader(["database/lessons/prob.yaml"])
+database["lessons"]         = LessonLoader(["database/lessons/prob.yaml",
+                                            "database/lessons/counting.yaml"])
 #print(database["lessons"].display())
 print("-" * 10)
 print(database["lessons"].array[0].lesson_ID)

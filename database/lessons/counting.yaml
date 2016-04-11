@@ -1,0 +1,17 @@
+id: 1
+topic: "Counting"
+module: "CM1103"
+content:
+  title: "Introduction to Counting"
+  introduction: >
+                This is counting
+
+  paragraphs:
+    - body: "This is the first paragraph."
+
+    - body: "Paragrpah 2 here. blah blah blah"
+      link: "wwww.stuartallen.com"
+
+  summary: >
+           Summary of the great lesson here
+
