@@ -5,7 +5,7 @@ import loaders
 TITLE_FONT = ("Helvetica", 18, "bold")
 
 class LogIn(tk.Frame):
-    
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -52,6 +52,10 @@ class LogIn(tk.Frame):
             tm.showinfo("Login info", "Welcome " + username)
 
             self.controller.show_frame("HomePage")
+
+        elif loaders.database["lecturers"].logIn(username, password):
+            tm.showinfo("Login info", "Welcome " + username)
+            self.controller.show_frame("LecturerHomePage")
 
         else:
             tm.showerror("Login error", "Incorrect username or password")

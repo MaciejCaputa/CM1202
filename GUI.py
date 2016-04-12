@@ -28,7 +28,7 @@ class GUI(tk.Tk):
         self.frames = {}
 
         # Make frames for GUI
-        for F in (LogIn, Register, HomePage, Lessons, TakeTest, TestGUI):
+        for F in (LogIn, Register, HomePage, LecturerHomePage, Lessons, TakeTest, TestGUI):
             page_name = F.__name__
             frame = F(container, self)
             self.frames[page_name] = frame
