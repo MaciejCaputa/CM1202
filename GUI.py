@@ -4,7 +4,7 @@ import loaders
 import webbrowser
 
 from LogIn import *
-from Register import *
+from register import *
 from HomePage import *
 from TestGUI import *
 
@@ -26,6 +26,8 @@ class GUI(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
+
+        # Make frames for GUI
         for F in (LogIn, Register, HomePage, Lessons, TakeTest, TestGUI):
             page_name = F.__name__
             frame = F(container, self)
@@ -42,6 +44,8 @@ class GUI(tk.Tk):
             self.frames[lesson.topic] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
+
+        # Display log-in
         self.show_frame("LogIn")
 
     def show_frame(self, page_name):
