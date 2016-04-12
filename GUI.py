@@ -4,7 +4,7 @@ import loaders
 import webbrowser
 
 from LogIn import *
-from register import *
+from Register import *
 from HomePage import *
 from TestGUI import *
 
