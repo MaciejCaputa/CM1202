@@ -54,17 +54,6 @@ class Question():
         self.incorrectAnswerMarks = int(incorrectAnswerMarks)
         self._studentFinalAnswers = {}
         Question._createdQuestions[self._question_ID] = self
-    
-    def _createQuestionText(self, filename, textTemplateNumber): #creates the question text using templates from a file
-        pass
-    
-        '''
-        - import template file
-        - decide which template to use
-        - generate random number(s)
-        - fill in template space(s) with generated number(s)
-        - return _questionText
-        '''
 
     def getQuestionID(self):
         return self._question_ID
@@ -116,13 +105,6 @@ class openQuestion(Question):
     
     def __init__(self, question_ID, module, topic, questionText, correctAnswer, marks, incorrectAnswerMarks):
         super().__init__(question_ID, module, topic, questionText, correctAnswer, marks, incorrectAnswerMarks)
-    
-    def createQuestionAnswer(self, filename, answerTemplateNumber):
-        with open(self.filenme) as csvfile:
-            rdr = csv.reader(csvfile)
-            
-            for row in rdr:
-                pass
             
     def isQuestionMultipleChoice(self): #checks if a question is multiple choice
             return False
@@ -137,13 +119,6 @@ class multipleChoice(Question):
     def __init__(self, question_ID, module, topic, questionText, correctAnswer, marks, incorrectAnswerMarks, options): #constructor
         super().__init__(question_ID, module, topic, questionText, correctAnswer, marks, incorrectAnswerMarks)
         self._options = options
-    
-    def createQuestionAnswers(self, filename, answerTemplateNumber, numberOfAnswers): #returns a list of answers
-        with open(self.filenme) as csvfile:
-            rdr = csv.reader(csvfile)
-            
-            for row in rdr:
-                pass
          
     def getOptions(self): 
         return self._options
