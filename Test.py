@@ -30,7 +30,7 @@ class Test():
                         testQuestions.append(Question.getQuestion(q))
                                       
                     cls._createdTests[row[CSV_ID]] = Test(row[CSV_ID], row[CSV_MODULE], row[CSV_TOPIC], row[CSV_NAME], row[CSV_INTRODUCTIONTEXT], testQuestions)
-        except csv.Error: ###WHICH EXCEPION TO RAISE???
+        except csv.Error: 
             return None
     
     @classmethod
@@ -86,10 +86,10 @@ class Test():
             yield q
     
 def testMain(): #FOR TESTING PURPOSES ONLY
-    test1 = Test.getTest("1")
+    test1 = Test.getTest("2")
     studentID = "01"
 
-    print("Test 1")
+    print("Test 2")
     print("ID = " + test1.getTestID())
     print("Module = " + test1.getModule())
     print("Topic = " + test1.getTopic())
