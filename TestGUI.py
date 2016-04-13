@@ -10,17 +10,10 @@ TITLE_FONT = ("Helvetica", 18, "bold")
 # therefore adding administrator acount is not allowed.
 class TestGUI(tk.Frame):
     
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, test):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         self.controller.title("Test")
-        self.displayTest(Test.getTest("1"))
-
-
-    def evaluateAnswer(self):
-            pass
-    
-    def displayTest(self, test):
 
 
         for idx, question in enumerate(test.getNextQuestion(), start=0): # usage of Test class generator (yielding)
@@ -54,4 +47,7 @@ class TestGUI(tk.Frame):
             butSubmit = Button(self, text = 'Submit', font = ('MS', 10,'bold'))
             butSubmit['command'] = self.evaluateAnswer
             butSubmit.grid(row = idx * 10 + 7, column = 8, sticky=E)
+
+    def evaluateAnswer(self):
+        pass
         

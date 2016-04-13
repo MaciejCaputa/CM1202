@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.messagebox as tm
 import loaders
 import webbrowser
+import Test
 
 
 
@@ -30,7 +31,7 @@ class GUI(tk.Tk):
         self.frames = {}
 
         # Make frames for GUI
-        for F in (LogIn, Register, HomePage, LecturerHomePage, Lessons, TakeTest, TestGUI):
+        for F in (LogIn, Register, HomePage, LecturerHomePage, Lessons, TakeTest):
             page_name = F.__name__
             frame = F(container, self)
             self.frames[page_name] = frame
@@ -46,6 +47,16 @@ class GUI(tk.Tk):
             self.frames[lesson.topic] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
+        # Make frames for each test
+        test = Test.getTest("1")
+        frame = TestGUI(container, self, test)
+        self.frames[test.getTopic() + "-test"] = frame
+        frame.grid(row=0, column=0, sticky="nsew")
+
+        test = Test.getTest("2")
+        frame = TestGUI(container, self, test)
+        self.frames[test.getTopic() + "-test"] = frame
+        frame.grid(row=0, column=0, sticky="nsew")
 
         # Display log-in
         self.show_frame("LogIn")
@@ -155,7 +166,7 @@ class ViewLesson(tk.Frame):
                            command=lambda: controller.show_frame("Lessons"))
 
         button2 = tk.Button(frame, text="Take Test",
-                   command=lambda: controller.show_frame("TestGUI"))
+                   command=lambda: controller.show_frame(lesson.topic + "-test"))
 
         button1.grid(row=current_row, columnspan=2)
         current_row += 1
