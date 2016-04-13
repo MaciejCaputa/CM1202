@@ -36,8 +36,6 @@ class LogIn(tk.Frame):
         self.button2.grid(columnspan=2)
 
 
-        self.pack()
-
     def register(self):
         self.controller.show_frame("Register")
 

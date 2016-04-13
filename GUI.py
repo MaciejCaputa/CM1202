@@ -30,11 +30,6 @@ class GUI(tk.Tk):
 
         self.frames = {}
 
-        # Make frames for each lesson
-        for lesson in loaders.database["lessons"].array:
-            frame = ViewLesson(container, self, lesson)
-            self.frames[lesson.topic] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
 
         # Make frames for GUI
         for F in (LogIn, Register, HomePage, LecturerHomePage, Lessons, TakeTest):
@@ -45,6 +40,13 @@ class GUI(tk.Tk):
             # put all of the pages in the same location;
             # the one on the top of the stacking order
             # will be the one that is visible.
+            frame.grid(row=0, column=0, sticky="nsew")
+
+            
+        # Make frames for each lesson
+        for lesson in loaders.database["lessons"].array:
+            frame = ViewLesson(container, self, lesson)
+            self.frames[lesson.topic] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
 
@@ -108,11 +110,11 @@ class ViewLesson(tk.Frame):
 
         # Need to make a canvas with a frame inside it in order to scroll: see
         # here: http://stackoverflow.com/questions/3085696/adding-a-scrollbar-to-a-group-of-widgets-in-tkinter/3092341#3092341
-        canvas = tk.Canvas(self, yscrollcommand=scrollbar.set, width=700, height=500)
+        canvas = tk.Canvas(self, yscrollcommand=scrollbar.set, width=800, height=600)
         canvas.pack(side=LEFT, fill=BOTH, expand=True)
         scrollbar.configure(command=canvas.yview)
         frame = tk.Frame(canvas)
-        canvas.create_window((1, 1), window=frame, anchor="n", tags="frame")
+        canvas.create_window((4, 4), window=frame, anchor="nw", tags="frame")
         frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox(ALL)))
         canvas.configure(scrollregion=canvas.bbox(ALL))
 
