@@ -22,7 +22,7 @@ class TestGUI(tk.Frame):
         # Need to make a canvas with a frame inside it in order to scroll: see
         # here: http://stackoverflow.com/questions/3085696/adding-a-scrollbar-to-a-group-of-widgets-in-tkinter/3092341#3092341
         canvas = tk.Canvas(self, yscrollcommand=scrollbar.set, width=800, height=600)
-        canvas.pack(side=LEFT, fill=BOTH, expand=True)
+        canvas.pack(side=TOP, expand=True)
         scrollbar.configure(command=canvas.yview)
         frame = tk.Frame(canvas)
         canvas.create_window((1, 1), window=frame, anchor="nw", tags="frame")
