@@ -4,7 +4,7 @@ module: "CM1103"
 content:
   title: "Introduction to probability"
   introduction: >
-                This is the introduction. I am Stuart Allen.
+                This is a brief introduction to probability, complete with examples.
 
   paragraphs:
     - body: >
@@ -79,5 +79,5 @@ content:
       image: "database/lessons/product-rule.gif"
 
   summary: >
-           Summary of the great lesson here
+           Now try the test!
 
