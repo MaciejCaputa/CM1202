@@ -101,7 +101,7 @@ class TestGUI(tk.Frame):
             self.correctLabels.append(correctLabel)
             self.incorrectLabels.append(incorrectLabel)
 
-        self.testSubmit = Button(frame, text = 'Submit Test', font = FONT, command=lambda :  self.submitTest(test))
+        self.testSubmit = Button(frame, text = 'Submit Test', font = BOLD_FONT, command=lambda :  self.submitTest(test))
         #self.testSubmit['command'] = self.submitTest(test)
         self.testSubmit.grid(row = idx * 10 + 11, column = 4, sticky=E)
         # Hide submit button until all questions have been answered
@@ -113,6 +113,7 @@ class TestGUI(tk.Frame):
 
     def evaluateAnswer(self, question, idx, test):
 
+        USER_ID = self.controller.USER_ID
         answer = str(self.vars[idx].get())
 
         if question.isAnswerCorrect(USER_ID, answer):
@@ -128,12 +129,15 @@ class TestGUI(tk.Frame):
             self.testSubmit.grid()
 
     def submitTest(self, test):
-        with open('StoreResults.csv', 'a') as f:  
+        USER_ID = self.controller.USER_ID
+        result = test.getTestResult(USER_ID)
+
+        with open('StoreResults.csv', 'a') as f:
             w = csv.DictWriter(f, ["studentID", "TestID", "Total"])
             testing = {}
-            testing = {"studentID":USER_ID, "TestID":test.getTestID(), "Total": test.getTestResult(USER_ID)}
+            testing = {"studentID":USER_ID, "TestID":test.getTestID(), "Total": result}
             w.writerow(testing)
 
-        tm.showinfo("Test Submission", "Test has been submited successfully! You will be redirected to Home Page. Your score: " + str(test.getTestResult(USER_ID)))
-        
+        tm.showinfo("Test Submission", "Test has been submited successfully! Your score was: {}/{}".format(result, test.getTotalAvailableMarks()))
+
         self.controller.show_frame("HomePage")

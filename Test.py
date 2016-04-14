@@ -88,28 +88,34 @@ class Test():
     def getNumberOfQuestions(self):
         return len(self._testQuestions)
 
+    def getTotalAvailableMarks(self):
+        total = 0
+        for q in self._testQuestions:
+            total += q.getAvailableMarks()
+        return total
+
 # def testMain(): #FOR TESTING PURPOSES ONLY
 #     test1 = Test.getTest("2")
 #     studentID = "01"
-# 
+#
 #     print("Test 2")
 #     print("ID = " + test1.getTestID())
 #     print("Module = " + test1.getModule())
 #     print("Topic = " + test1.getTopic())
 #     print("Test Name = " + test1.getTestName())
 #     print("Introduction Text = " + test1.getIntroductionText())
-# 
+#
 #     for q in test1.getNextQuestion():
 #         print("\nQuestion " + q.getQuestionID())
 #         print(q.getQuestionText())
 #         print("Marks available = " + str(q.getAvailableMarks()))
-# 
+#
 #         if(q.isQuestionMultipleChoice()):
 #             print("Options: ")
-# 
+#
 #             for o in q.getOptions():
 #                 print((q.getOptions().index(o) + 1), o)
-# 
+#
 #         print("Submitting answer 1")
 #         print("Is Answer Correct? = " + str(q.isAnswerCorrect(studentID, "1")))
 #         print("Correct Answer = " + q.getCorrectAnswer())
@@ -117,6 +123,6 @@ class Test():
 #         print("Marks Awarded = " + str(q.marksAwarded(studentID)))
 #         test1.addQuestionResult(studentID, q)
 #     print("\nTest Result = " + str(test1.getTestResult(studentID)))
-# 
+#
 # if __name__ == "__main__":
 #     testMain()

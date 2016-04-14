@@ -34,4 +34,4 @@ class LecturerHomePage(tk.Frame):
         button3.pack()
 
     def openFile(self):
-        os.startfile('C:/Users/DomLaptop/Documents/LessonCourse/CM1202/StoreResults.csv')
+        os.startfile('StoreResults.csv')

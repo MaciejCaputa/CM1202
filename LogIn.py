@@ -2,7 +2,6 @@ import tkinter as tk
 import tkinter.messagebox as tm
 import loaders
 
-USER_ID = ""
 TITLE_FONT = ("Helvetica", 18, "bold")
 
 class LogIn(tk.Frame):
@@ -29,7 +28,7 @@ class LogIn(tk.Frame):
         self.entry2.grid(row=2, column=1)
 
         self.button1 = tk.Button(self, text="Login",
-                            command=self.log_in)
+                            command=lambda: self.log_in(controller))
         self.button1.grid(columnspan=2)
 
         self.button2 = tk.Button(self, text="Create new student account",
@@ -40,17 +39,17 @@ class LogIn(tk.Frame):
     def register(self):
         self.controller.show_frame("Register")
 
-    def log_in(self):
+    def log_in(self, controller):
         username = self.entry1.get()
         password = self.entry2.get()
 
         if loaders.database["students"].logIn(username, password):
-            USER_ID = username
+            controller.USER_ID = username
             tm.showinfo("Login info", "Welcome " + username)
             self.controller.show_frame("HomePage")
 
         elif loaders.database["lecturers"].logIn(username, password):
-            USER_ID = username
+            controller.USER_ID = username
             tm.showinfo("Login info", "Welcome " + username)
             self.controller.show_frame("LecturerHomePage")
 
