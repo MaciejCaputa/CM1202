@@ -1,17 +1,56 @@
-id: 1
+id: 2
 topic: "Counting"
 module: "CM1103"
 content:
   title: "Introduction to Counting"
   introduction: >
-                This is counting
+                This is a brief introduction to counting. This lesson covers permutations
+                and combinations and has worked solutions for some typical exam questions
 
   paragraphs:
-    - body: "This is the first paragraph."
+    - body: >
+            Definition (permutation): A permutation of a set is an order of the
+            objects in sequence
+    - body: >
+            Example: S = {1, 2, 3}. The permutations of S are:
+            (1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2), (3, 2, 1).
+      image: "database/lessons/permutation.gif"
 
-    - body: "Paragrpah 2 here. blah blah blah"
-      link: "wwww.stuartallen.com"
+    - body: >
+            A set of n objects has n! (n factorial) permutations. We can use
+            permutations in Python with the itertools module
+      link: "http://docs.python.org/3/library/itertools.html"
+
+    - body: >
+            Definition (r-permutation): An r-permutation of a set of n elements
+            is an ordered selection of elements taken from the set without repetition.
+
+    - body: >
+            The number of r-permutations of a set of n elements is given by:
+      image: "database/lessons/permutation-formula.gif"
+
+    - body: >
+            Example: Suppose we have a squad of 14 cricketeers. How many batting
+            line-ups of 11 players are there?
+
+    - body: >
+            Solution: P(14,11) = 14!/3! = 14529715200
+
+    - body: >
+            Definition (r-combination): An r-combination of a set of size n is a
+            subset of size r (note that the order does not matter)
+
+    - body: >
+           The number of r-combinations of a set of n elements is given by:
+      image: "database/lessons/combination-formula.gif"
+
+    - body: >
+            Example: How many different ways are there of choosing a team of 5
+            basketball players from a squad of 12?
+
+    - body: >
+            Solution: We don't care about order here, so the answer is C(12, 5)
+            = 12!/(5! × 7!) = 792
 
   summary: >
-           Summary of the great lesson here
-
+           Now you have mastered the content, take the test!
