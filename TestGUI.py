@@ -120,7 +120,7 @@ class TestGUI(tk.Frame):
         test.addQuestionResult(USER_ID, question)
 
         self.answered += 1
-        if self.answered == test.getNoOfQuestions():
+        if self.answered == test.getNumberOfQuestions():
             self.testSubmit.grid()
 
     def submitTest(self):
