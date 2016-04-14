@@ -106,7 +106,7 @@ class openQuestion(Question):
     def __init__(self, question_ID, module, topic, questionText, correctAnswer, marks, incorrectAnswerMarks):
         super().__init__(question_ID, module, topic, questionText, correctAnswer, marks, incorrectAnswerMarks)
 
-    def isQuestionMultipleChoice(self): #checks if a question is multiple choice
+    def isQuestionMultipleChoice(self): 
             return False
 
 
@@ -123,33 +123,33 @@ class multipleChoice(Question):
     def getOptions(self):
         return self._options
 
-    def isQuestionMultipleChoice(self): #checks if a question is multiple choice
+    def isQuestionMultipleChoice(self): 
         return True
 
-def main(): #FOR TESTING PURPOSES ONLY
-
-    question1 = Question.getQuestion("1")
-    question2 = Question.getQuestion("2")
-
-    print("Question 1")
-    if(question1.isQuestionMultipleChoice()):
-        print("Multiple Choice Questions")
-        print("Options: ")
-        print(question1.getOptions())
-
-    print("Is Answer Correct?")
-    print(question1.isAnswerCorrect("01", "1"))
-
-    print("Question 2")
-
-    if(question2.isQuestionMultipleChoice()):
-        print("Multiple Choice Questions")
-        print("Options: ")
-        print(question2.getOptions())
-
-    print("Is Answer Correct?")
-    print(question2.isAnswerCorrect("01", "1/2"))
-
-
-if __name__ == "__main__":
-    main()
+# def main(): #FOR TESTING PURPOSES ONLY
+# 
+#     question1 = Question.getQuestion("1")
+#     question2 = Question.getQuestion("2")
+# 
+#     print("Question 1")
+#     if(question1.isQuestionMultipleChoice()):
+#         print("Multiple Choice Questions")
+#         print("Options: ")
+#         print(question1.getOptions())
+# 
+#     print("Is Answer Correct?")
+#     print(question1.isAnswerCorrect("01", "1"))
+# 
+#     print("Question 2")
+# 
+#     if(question2.isQuestionMultipleChoice()):
+#         print("Multiple Choice Questions")
+#         print("Options: ")
+#         print(question2.getOptions())
+# 
+#     print("Is Answer Correct?")
+#     print(question2.isAnswerCorrect("01", "1/2"))
+# 
+# 
+# if __name__ == "__main__":
+#     main()
