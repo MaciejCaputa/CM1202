@@ -1,0 +1,43 @@
+import csv
+def _init_(self, parent, controller):
+    tk.Frame._init_(self , parent)
+    self.controller = controller
+    label1 = tk.Label(self , text=averageGrade() , font = TITLE_FONT)
+    label1.pack(side = "top", fill= "x" , pady=15)
+    label2 = tk.Label(self , text=falseFrequency(), font =TITLE_FONT)
+    label2.pack(side = "top", fill= "x" , pady=15)
+def averageGrade():
+    with open('CM1202/StoreResults.csv') as csvfile:
+        rdr = csv.reader(csvfile)
+        next(rdr, None)
+        count = 0
+        total = 0 
+        average = 0
+        for row in rdr:
+            total += (int(row[8]))
+            if(str(row[0])!= None):
+                count = count + 1
+        average1 = total/count        
+        return(average1)
+
+def falseFrequency():
+    with open('CM1202/StoreResults.csv') as csvfile:
+        rdr1 = csv.reader(csvfile)
+        next(rdr1, None)
+        questionResult = []
+        totalQ1 = 0 
+        totalQ2 = 0
+        totalQ3 = 0
+        totalQ4 = 0
+        totalQ5 = 0
+        totalQ6 = 0
+        for row in rdr1:
+            totalQ1 += (int(row[2]))
+            totalQ2 += (int(row[3]))
+            totalQ3 += (int(row[4]))
+            totalQ4 += (int(row[5]))
+            totalQ5 += (int(row[6]))
+            if(int(row[7]) != None):
+                totalQ6 += (int(row[7]))      
+print(falseFrequency())      
+print(averageGrade())
