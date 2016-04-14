@@ -81,7 +81,7 @@ class TestGUI(tk.Frame):
                 answer = question.getCorrectAnswer()
 
             correctLabel = Label(frame, text="Correct", font=('MS', 10, 'bold'))
-            incorrectLabel = Label(frame, text="Incorrect. Correct option was: " + answer, font = ('MS', 10, 'bold'))
+            incorrectLabel = Label(frame, text="Incorrect. Correct answer was: " + answer, font = ('MS', 10, 'bold'))
 
             self.correctLabels.append(correctLabel)
             self.incorrectLabels.append(incorrectLabel)
