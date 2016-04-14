@@ -98,14 +98,21 @@ class ViewLesson(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        #PARAGRAPH_PADDING = 7
-        PARAGRAPH_PADDING = 21
+        # I think a lower padding makes text much easier to read
+        PARAGRAPH_PADDING = 7
         #WRAP_LENGTH = 400
         WRAP_LENGTH = 775
 
         # Make a scrollbar
         scrollbar = tk.Scrollbar(self)
         scrollbar.pack(side=RIGHT, fill=Y)
+
+        # Show the title
+        title = "{} ({})".format(lesson.topic, lesson.module)
+        self.controller.title(title)
+        self.title = tk.Label(self, text=title, font=TITLE_FONT)
+        # self.title.grid(columnspan=2)
+        self.title.pack(pady=10)
 
         # Need to make a canvas with a frame inside it in order to scroll: see
         # here: http://stackoverflow.com/questions/3085696/adding-a-scrollbar-to-a-group-of-widgets-in-tkinter/3092341#3092341
@@ -118,12 +125,6 @@ class ViewLesson(tk.Frame):
         canvas.create_window((4, 4), window=frame, anchor="nw", tags="frame")
         frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox(ALL)))
         canvas.configure(scrollregion=canvas.bbox(ALL))
-
-        # Show the title
-        title = "{} ({})".format(lesson.topic, lesson.module)
-        self.controller.title(title)
-        self.title = tk.Label(frame, text=title, font=TITLE_FONT)
-        self.title.grid(columnspan=2)
 
         current_row = 1
 
