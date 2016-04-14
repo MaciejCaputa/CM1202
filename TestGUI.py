@@ -4,7 +4,7 @@ import loaders
 from tkinter import *
 from Test import Test
 import webbrowser
-from LogIn import * 
+from LogIn import *
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 
@@ -15,6 +15,11 @@ class TestGUI(tk.Frame):
     def __init__(self, parent, controller, test):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+
+        self.test = test
+
+        # Keep track of how many questions have been answered
+        self.answered = 0
 
         # Make a scrollbar
         scrollbar = tk.Scrollbar(self)
@@ -39,10 +44,10 @@ class TestGUI(tk.Frame):
 
         # Keep track of the submit buttons so we can remove them once clicked
         self.submit_buttons = []
-        
+
         testTitle = Label(frame, text=test.getTestName(), font=('MS', 12, 'bold'), wraplength=750)
         testTitle.grid(row = 1, column = 1, columnspan = 7)
-        
+
         introductionText = Label(frame, text=test.getIntroductionText(), font=('MS', 10, 'bold'), wraplength=750)
         introductionText.grid(row = 2, column = 1, columnspan = 7)
 
@@ -91,12 +96,12 @@ class TestGUI(tk.Frame):
 
             self.correctLabels.append(correctLabel)
             self.incorrectLabels.append(incorrectLabel)
-            
-        testSubmit = Button(frame, text = 'Submit Test', font = ('MS', 10, 'bold'))
-        testSubmit['command'] = self.submitTest()
-        testSubmit.grid(row = idx * 10 + 11, column = 4, sticky=E)
-        
-        
+
+        self.testSubmit = Button(frame, text = 'Submit Test', font = ('MS', 10, 'bold'))
+        self.testSubmit['command'] = self.submitTest()
+        self.testSubmit.grid(row = idx * 10 + 11, column = 4, sticky=E)
+        # Hide submit button until all questions have been answered
+        self.testSubmit.grid_forget()
 
 
     def submit_command(self, question, idx, test):
@@ -105,9 +110,6 @@ class TestGUI(tk.Frame):
     def evaluateAnswer(self, question, idx, test):
 
         answer = str(self.vars[idx].get())
-        print("You chose " + str(answer))
-
-        print("Correct answer is " + question.getCorrectAnswer())
 
         if question.isAnswerCorrect(USER_ID, answer):
             self.correctLabels[idx].grid(row=idx * 10 + 12, column=1, sticky=W)
@@ -116,6 +118,10 @@ class TestGUI(tk.Frame):
 
         self.submit_buttons[idx].grid_remove()
         test.addQuestionResult(USER_ID, question)
-        
+
+        self.answered += 1
+        if self.answered == test.getNoOfQuestions():
+            self.testSubmit.grid()
+
     def submitTest(self):
         pass
