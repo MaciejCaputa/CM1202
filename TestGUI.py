@@ -7,15 +7,17 @@ import webbrowser
 from LogIn import *
 
 TITLE_FONT = ("Helvetica", 18, "bold")
+FONT = ("MS", 10, "normal")
+BOLD_FONT = ("MS", 10, "bold")
 
 # Administrator account can be only created by software package programmer,
 # therefore adding administrator acount is not allowed.
 class TestGUI(tk.Frame):
 
+
     def __init__(self, parent, controller, test):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-
         self.test = test
 
         # Keep track of how many questions have been answered
@@ -45,15 +47,16 @@ class TestGUI(tk.Frame):
         # Keep track of the submit buttons so we can remove them once clicked
         self.submit_buttons = []
 
-        testTitle = Label(frame, text=test.getTestName(), font=('MS', 12, 'bold'), wraplength=750)
+        testTitle = Label(frame, text=test.getTestName(), font=TITLE_FONT, wraplength=750)
         testTitle.grid(row = 1, column = 1, columnspan = 7)
 
-        introductionText = Label(frame, text=test.getIntroductionText(), font=('MS', 10, 'bold'), wraplength=750)
+        introductionText = Label(frame, text=test.getIntroductionText(), font=FONT, wraplength=750,
+                                 pady=20)
         introductionText.grid(row = 2, column = 1, columnspan = 7)
 
         for idx, question in enumerate(test.getNextQuestion(), start=0): # usage of Test class generator (yielding)
-            task = Label(frame, text = "Task " + (str(idx + 1) + ". " + question.getQuestionText()), font = ('MS', 10, 'bold'), justify=LEFT, wraplength=500)
-            task.grid(row = idx * 10 + 6, column = 1, columnspan = 7)
+            task = Label(frame, text = "Task " + (str(idx + 1) + ". " + question.getQuestionText()), font = FONT, justify=LEFT, wraplength=500)
+            task.grid(row = idx * 10 + 6, column = 0, columnspan = 7)
 
             if question.isQuestionMultipleChoice():
                 options = question.getOptions()
@@ -65,9 +68,9 @@ class TestGUI(tk.Frame):
                 # Displaying answers
                 for i in range(4):
                     radio[i] = Radiobutton(frame, variable=self.vars[-1], value=i+1)
-                    radio[i].grid(row = idx * 10 + 8, column=i * 2 + 1, sticky=E)
-                    answer[i] = Label(frame, text = options[i], font = ('MS', 10, 'bold'))
-                    answer[i].grid(row = idx * 10 + 8, column=i * 2 + 2, sticky=W)
+                    radio[i].grid(row = idx * 10 + 8, column=i + 2, sticky=E)
+                    answer[i] = Label(frame, text = options[i], font = FONT)
+                    answer[i].grid(row = idx * 10 + 8, column=i + 3, sticky=W)
 
             else:
                 entAns = Entry(frame)
@@ -75,12 +78,12 @@ class TestGUI(tk.Frame):
                 self.vars.append(entAns)
 
 
-            mark = Label(frame, text = '(' + str(question.getAvailableMarks()) + ' marks)', font = ('MS', 10, 'bold'))
-            mark.grid(row = idx * 10 + 8, column = 8, sticky=E)
+            mark = Label(frame, text = '(' + str(question.getAvailableMarks()) + ' marks)', font = FONT)
+            mark.grid(row = idx * 10 + 8, column = 6, sticky=E)
 
-            butSubmit = Button(frame, text = 'Submit', font = ('MS', 10,'bold'))
+            butSubmit = Button(frame, text = 'Submit', font = BOLD_FONT)
             butSubmit['command'] = self.submit_command(question, idx, test)
-            butSubmit.grid(row = idx * 10 + 10, column = 8, sticky=E)
+            butSubmit.grid(row = idx * 10 + 10, column = 6, sticky=E)
             self.submit_buttons.append(butSubmit)
 
             # If it is a multiple choice q then answer is 1,2,3 or 4, NOT the
@@ -91,13 +94,13 @@ class TestGUI(tk.Frame):
             else:
                 answer = question.getCorrectAnswer()
 
-            correctLabel = Label(frame, text="Correct", font=('MS', 10, 'bold'))
-            incorrectLabel = Label(frame, text="Incorrect. Correct answer was: " + answer, font = ('MS', 10, 'bold'))
+            correctLabel = Label(frame, text="Correct", font=BOLD_FONT)
+            incorrectLabel = Label(frame, text="Incorrect. Correct answer was: " + answer, font = BOLD_FONT)
 
             self.correctLabels.append(correctLabel)
             self.incorrectLabels.append(incorrectLabel)
 
-        self.testSubmit = Button(frame, text = 'Submit Test', font = ('MS', 10, 'bold'))
+        self.testSubmit = Button(frame, text = 'Submit Test', font = FONT)
         self.testSubmit['command'] = self.submitTest()
         self.testSubmit.grid(row = idx * 10 + 11, column = 4, sticky=E)
         # Hide submit button until all questions have been answered
@@ -112,9 +115,9 @@ class TestGUI(tk.Frame):
         answer = str(self.vars[idx].get())
 
         if question.isAnswerCorrect(USER_ID, answer):
-            self.correctLabels[idx].grid(row=idx * 10 + 12, column=1, sticky=W)
+            self.correctLabels[idx].grid(row=idx * 10 + 12, column=1, sticky=E)
         else:
-            self.incorrectLabels[idx].grid(row=idx * 10 + 12, column=1, sticky=W)
+            self.incorrectLabels[idx].grid(row=idx * 10 + 12, column=1, sticky=E)
 
         self.submit_buttons[idx].grid_remove()
         test.addQuestionResult(USER_ID, question)
