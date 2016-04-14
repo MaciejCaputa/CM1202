@@ -17,11 +17,7 @@ class HomePage(tk.Frame):
         button1 = tk.Button(self, text="Lessons",
                             command=lambda: controller.show_frame("Lessons"))
 
-        button2 = tk.Button(self, text="View Results",
-                            command=lambda: controller.show_frame("HomePage"))
-
         button1.pack()
-        button2.pack()
 
 class LecturerHomePage(tk.Frame):
     def __init__(self, parent, controller):
