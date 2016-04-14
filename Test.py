@@ -85,7 +85,7 @@ class Test():
         for q in self._testQuestions:
             yield q
 
-    def getNoOfQuestions(self):
+    def getNumberOfQuestions(self):
         return len(self._testQuestions)
 
 def testMain(): #FOR TESTING PURPOSES ONLY
