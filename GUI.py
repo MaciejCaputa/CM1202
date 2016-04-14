@@ -157,7 +157,7 @@ class ViewLesson(tk.Frame):
                 link_label = tk.Label(frame, text=paragraph.link, foreground="blue")
 
                 # Open the link in a web browser when clicked
-                link_label.bind("<Button-1>", lambda e: webbrowser.open(paragraph.link))
+                link_label.bind("<Button-1>", self.link_command(paragraph.link))
 
                 # Set the cursor to make it more clear that this can be clicked
                 link_label.config(cursor="hand2")
@@ -179,6 +179,9 @@ class ViewLesson(tk.Frame):
         button1.grid(row=current_row, columnspan=2)
         current_row += 1
         button2.grid(row=current_row, columnspan=2)
+
+    def link_command(self, link):
+        return lambda e: webbrowser.open(link)
 
 
 class TakeTest(tk.Frame):
