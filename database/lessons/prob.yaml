@@ -7,11 +7,71 @@ content:
                 This is the introduction. I am Stuart Allen.
 
   paragraphs:
-    - body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-      image: "database/lessons/dice.gif"
+    - body: >
+            Definition (sample space): The sample space of an experiment is the
+            set of all possible outcomes.
 
-    - body: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-      link: "www.stuartallen.com"
+    - body: >
+            Examples: Flipping a coin: {Heads,Tails}. Rolling a 6-sided die:
+            {1,2,3,4,5,6}. Both together: {Heads,Tails} × {1,2,3,4,5,6}.
+
+    - body: >
+            Definition (event): An event is a subset of a sample space.
+
+    - body: >
+            Examples: When rolling a 6-sided die, the event that the result is
+            even: {2, 4, 6}
+
+    - body: >
+            Definition (probability): Given an experiment with a sample space S
+            of equally likely outcomes and an event E (being a subset of these
+            outcomes,i.e. E ⊆ S), the probability of E occurring is:
+      image: "database/lessons/probability-formula.gif"
+
+    - body: >
+            Example: If we roll a 6-sided die once, what is the probability of
+            rolling an even number?
+    - body: >
+            Solution: The sample space S is all the possible outcomes, so
+            S={1,2,3,4,5,6}. The event E that the result is an even number is {2,4,6}.
+            Therefore P(E) = |E| / |S| = 3 ÷ 6 = 0.5
+
+    - body: >
+            Another example: If we roll a pair of 6-sided dice once, what is the
+            probability that the total is 6?
+
+    - body: >
+            Solution: This is the sample space for the experiment:
+      image: "database/lessons/dice-sample-space.gif"
+
+    - body: >
+            We can see that there are 36 possible outcomes, so |S| = 36. Now we
+            need to consider the event where the total is 6. This is:
+      image: "database/lessons/dice-event.gif"
+
+    - body: >
+            and so |E| = 5. Therefore the probability is P(E) = 5 ÷ 36 ≈ 0.1389
+
+    - body: >
+            Definition (sum rule): Let A and B be two events. Then the probability
+            that A OR B happens is given by:
+      image: "database/lessons/sum-rule.gif"
+
+    - body: >
+            Example: A single card is drawn from a pack of 52. What is the probability
+            that the card is an Ace or a Heart?
+
+    - body: >
+            Solution: There are 4 aces and 13 hearts in a pack of cards, so
+            P(Ace) = 4 ÷ 52 and P(Heart) = 13 ÷ 52. There is only 1 card that is
+            both an Ace and a Heart, so P(Ace and Heart) = 1 ÷ 52. Therefore by the sum rule:
+            P(Ace or Heart) = P(Ace) + P(Heart) - P(Ace and heart) = 16 ÷ 52 ≈ 0.3077
+
+    - body: >
+            Definition (conditional probability): Given two events A and B, the
+            conditional probability P(A|B) (or the probability of A given that B
+            happens) is given by:
+      image: "database/lessons/conditional-prob.gif"
 
   summary: >
            Summary of the great lesson here
