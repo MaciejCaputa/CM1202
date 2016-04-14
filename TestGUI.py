@@ -5,6 +5,7 @@ from tkinter import *
 from Test import Test
 import webbrowser
 from LogIn import *
+import csv
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 FONT = ("MS", 10, "normal")
@@ -100,8 +101,8 @@ class TestGUI(tk.Frame):
             self.correctLabels.append(correctLabel)
             self.incorrectLabels.append(incorrectLabel)
 
-        self.testSubmit = Button(frame, text = 'Submit Test', font = FONT)
-        self.testSubmit['command'] = self.submitTest()
+        self.testSubmit = Button(frame, text = 'Submit Test', font = FONT, command=lambda :  self.submitTest(test))
+        #self.testSubmit['command'] = self.submitTest(test)
         self.testSubmit.grid(row = idx * 10 + 11, column = 4, sticky=E)
         # Hide submit button until all questions have been answered
         self.testSubmit.grid_forget()
@@ -126,5 +127,13 @@ class TestGUI(tk.Frame):
         if self.answered == test.getNumberOfQuestions():
             self.testSubmit.grid()
 
-    def submitTest(self):
-        pass
+    def submitTest(self, test):
+        with open('StoreResults.csv', 'a') as f:  
+            w = csv.DictWriter(f, ["studentID", "TestID", "Total"])
+            testing = {}
+            testing = {"studentID":USER_ID, "TestID":test.getTestID(), "Total": test.getTestResult(USER_ID)}
+            w.writerow(testing)
+
+        tm.showinfo("Test Submission", "Test has been submited successfully! You will be redirected to Home Page. Your score: " + str(test.getTestResult(USER_ID)))
+        
+        self.controller.show_frame("HomePage")
