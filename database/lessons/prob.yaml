@@ -73,6 +73,11 @@ content:
             happens) is given by:
       image: "database/lessons/conditional-prob.gif"
 
+    - body: >
+            Definition (product rule): Given two events A and B, the probability
+            that both A and B occur is given by:
+      image: "database/lessons/product-rule.gif"
+
   summary: >
            Summary of the great lesson here
 
