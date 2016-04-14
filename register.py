@@ -7,7 +7,7 @@ TITLE_FONT = ("Helvetica", 18, "bold")
 # Administrator account can be only created by software package programmer,
 # therefore adding administrator acount is not allowed.
 class Register(tk.Frame):
-    
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -30,7 +30,7 @@ class Register(tk.Frame):
         for i in range(4):
             self.label[i].grid(row=i+1, column=0)
             self.entry[i].grid(row=i+1, column=1)
-        
+
         self.account_type = 0
         self.radiobutton = [None] * 3
         self.radiobutton[0] = tk.Radiobutton(self, text="Student", variable=self.account_type, value=0, command=self.student)
@@ -72,8 +72,6 @@ class Register(tk.Frame):
         self.entry[5].grid(row=7,column=1)
 
     def register(self):
-        print(self.entry)
-        print(self.account_type)
         username    = self.entry[0].get()
         forename    = self.entry[1].get()
         surname     = self.entry[2].get()

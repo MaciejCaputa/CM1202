@@ -40,11 +40,8 @@ class LogIn(tk.Frame):
         self.controller.show_frame("Register")
 
     def log_in(self):
-        #print("Clicked")
         username = self.entry1.get()
         password = self.entry2.get()
-
-        print(username, password)
 
         if loaders.database["students"].logIn(username, password):
             tm.showinfo("Login info", "Welcome " + username)

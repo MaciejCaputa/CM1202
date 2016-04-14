@@ -31,8 +31,6 @@ class Loader:
     def searchUsername(self, username):
         """Looks up an username and returns his/her object. If user is not found return None"""
         for user in self.array:
-            print(username)
-            print(user.getUsername())
             if user.getUsername() == username: # Assumption: username is unique!
                 return user
 
@@ -175,6 +173,3 @@ database["lecturers"]       = LecturerLoader("database/lecturers.csv")
 database["students"]        = StudentLoader("database/students.csv")
 database["lessons"]         = LessonLoader(["database/lessons/prob.yaml",
                                             "database/lessons/counting.yaml"])
-#print(database["lessons"].display())
-print("-" * 10)
-print(database["lessons"].array[0].lesson_ID)
