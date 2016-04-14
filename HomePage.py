@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.messagebox as tm
 import loaders
+import os
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 
@@ -29,3 +30,8 @@ class LecturerHomePage(tk.Frame):
 
         label = tk.Label(self, text="Lecturer Home Page", font=TITLE_FONT)
         label.pack(side="top", fill="x", pady=10)
+        button3 = tk.Button(self, text="Results", command = self.openFile)
+        button3.pack()
+
+    def openFile(self):
+        os.startfile('C:/Users/DomLaptop/Documents/LessonCourse/CM1202/StoreResults.csv')
