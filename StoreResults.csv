@@ -1,12 +1,2 @@
-StudentID,TestID,Q1,Q2,Q3,Q4,Q5,Q6,Total
-,1,
-,2,
-,1,
-,2,
-,1,
-,2,
-,1,
-,2,
-,1,
-,2,
-,2,0
+StudentID,TestID,Total
+WebMattson,1,9
