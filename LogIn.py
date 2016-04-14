@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.messagebox as tm
 import loaders
 
+USER_ID = ""
 TITLE_FONT = ("Helvetica", 18, "bold")
 
 class LogIn(tk.Frame):
@@ -44,11 +45,12 @@ class LogIn(tk.Frame):
         password = self.entry2.get()
 
         if loaders.database["students"].logIn(username, password):
+            USER_ID = username
             tm.showinfo("Login info", "Welcome " + username)
-
             self.controller.show_frame("HomePage")
 
         elif loaders.database["lecturers"].logIn(username, password):
+            USER_ID = username
             tm.showinfo("Login info", "Welcome " + username)
             self.controller.show_frame("LecturerHomePage")
 

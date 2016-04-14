@@ -4,6 +4,7 @@ import loaders
 from tkinter import *
 from Test import Test
 import webbrowser
+from LogIn import * 
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 
@@ -102,7 +103,7 @@ class TestGUI(tk.Frame):
 
         print("Correct answer is " + question.getCorrectAnswer())
 
-        if answer == question.getCorrectAnswer():
+        if question.isAnswerCorrect(USER_ID, answer):
             self.correctLabels[idx].grid(row=idx * 10 + 3, column=1, sticky=W)
         else:
             self.incorrectLabels[idx].grid(row=idx * 10 + 3, column=1, sticky=W)
