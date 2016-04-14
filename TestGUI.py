@@ -29,7 +29,7 @@ class TestGUI(tk.Frame):
         frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox(ALL)))
         canvas.configure(scrollregion=canvas.bbox(ALL))
 
-
+        self.var = [IntVar()] * 7
         for idx, question in enumerate(test.getNextQuestion(), start=0): # usage of Test class generator (yielding)
             task = Label(frame, text = "Task " + (str(idx + 1) + ". " + question.getQuestionText()), font = ('MS', 10, 'bold'), justify=LEFT, wraplength=500)
             task.grid(row = idx * 10 + 1, column = 1, columnspan = 7)
@@ -39,11 +39,10 @@ class TestGUI(tk.Frame):
                 radio  = [None] * 4
                 answer = [None] * 4
 
-                self.var = IntVar()
 
                 # Displaying answers
                 for i in range(4):
-                    radio[i] = Radiobutton(frame, variable = self.var, value = i + 1)
+                    radio[i] = Radiobutton(frame, variable = self.var[idx], value = i + 1)
                     radio[i].grid(row = idx * 10 + 2, column = i * 2 + 1, sticky=E)
                     answer[i] = Label(frame, text = options[i], font = ('MS', 10, 'bold'))
                     answer[i].grid(row = idx * 10 + 2, column = i * 2 + 2, sticky=W)
@@ -56,10 +55,27 @@ class TestGUI(tk.Frame):
             mark = Label(frame, text = '(' + str(question.getAvailableMarks()) + ' marks)', font = ('MS', 10, 'bold'))
             mark.grid(row = idx * 10 + 6, column = 8, sticky=E)
 
-            butSubmit = Button(frame, text = 'Submit', font = ('MS', 10,'bold'))
-            butSubmit['command'] = self.evaluateAnswer
+            butSubmit = Button(frame, text="Submit", command=self.buttonCommand(question, idx, frame))
             butSubmit.grid(row = idx * 10 + 7, column = 8, sticky=E)
 
 
-    def evaluateAnswer(self):
-        pass
+    def radioCommand(self, idx):
+        return lambda : self.getIndex(idx)
+
+    def getIndex(self, idx):
+        return self.var[idx]
+
+    def buttonCommand(self, question, idx, frame):
+        return lambda : self.evaluateAnswer(question, idx, frame)
+
+    def evaluateAnswer(self, question, idx, frame):
+        print(self.var[idx].get())
+        if self.var[idx]:
+
+            if question.isAnswerCorrect("webMattson", str(self.var[idx])):
+                correctLabel = Label(frame, text = "Correct", font = ('MS', 10, 'bold'))
+                print("Correct")
+            else:
+                correctLabel = Label(frame, text = "Incorrect. Correct option was: " + str(question.getCorrectAnswer()), font = ('MS', 10, 'bold'))
+                print("Incorrect")
+            correctLabel.grid(row = idx * 10 + 3, column = 1, sticky=W)
