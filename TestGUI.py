@@ -84,6 +84,12 @@ class TestGUI(tk.Frame):
 
             self.correctLabels.append(correctLabel)
             self.incorrectLabels.append(incorrectLabel)
+            
+        testSubmit = Button(frame, text = 'Submit Test', font = ('MS', 10, 'bold'))
+        testSubmit['command'] = self.submitTest()
+        testSubmit.grid(row = idx * 10 + 8, column = 4, sticky=E)
+        
+        
 
 
     def submit_command(self, question, idx):
@@ -102,3 +108,6 @@ class TestGUI(tk.Frame):
             self.incorrectLabels[idx].grid(row=idx * 10 + 3, column=1, sticky=W)
 
         self.submit_buttons[idx].grid_remove()
+        
+    def submitTest(self):
+        pass
