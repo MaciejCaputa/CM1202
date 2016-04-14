@@ -1,27 +1,39 @@
-import lesson #Only put this here just so I can't miss out files if needed#
-import loaders
-import register
-import users
+from lesson import * #Only put this here just so I can't miss out files if needed#
+from loaders import *
+from register import *
+from users import *
+from Test import *
+from LogIn import *
+from register import *
+from HomePage import *
+from TestGUI import *
 
-"For lecturer to get result, provide feedback"
-
-"For student to get feedback from lecturer"
+"Storing the result for lecturer to access later"
 
 class Result:
     """  Result Class """
-    def __init__(self, ID, username, result, feedback):
+    def __init__(self, ID, username, result, lecturerfeedback):
         self.testID = ID
         self.username = username
         self.result = result
-        self.lecturerfeedback = feedback
+        self.lecturerfeedback = lecturerfeedback
 
-    def getresult(self, testID, studentnumber):
-        return self.studentnumber
+    def getResult(self, studentID):
+        return getTestResult(studentID)
         #return int#
 
-    def providefeedback(self, feedback):
-        pass
+    def storeResult(self, studentID, test):
+        with open('C:/Users/DomLaptop/Documents/LessonCourse/CM1202/StoreResults.csv', 'a') as f:  
+            w = csv.DictWriter(f, ["studentID", "TestID", "Total"])
+            testing = {}
+            testing = {"studentID":studentID, "TestID":test.getTestID(), "Total": test.getTestResult(studentID)}
+            w.writerow(testing)
         #return void#
 
-    def getlecturerfeedback(self, testID, studentnumber):
+    def provideFeedback(self, lecturerfeedback):
+        return lecturerfeedback
+        #return void#
+
+    def getlecturerfeedback(self, lecturerfeedback):
+        return lecturerfeedback
         #return string#
