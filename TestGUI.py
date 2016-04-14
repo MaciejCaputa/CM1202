@@ -68,7 +68,7 @@ class TestGUI(tk.Frame):
             mark.grid(row = idx * 10 + 6, column = 8, sticky=E)
 
             butSubmit = Button(frame, text = 'Submit', font = ('MS', 10,'bold'))
-            butSubmit['command'] = self.submit_command(question, idx)
+            butSubmit['command'] = self.submit_command(question, idx, test)
             butSubmit.grid(row = idx * 10 + 7, column = 8, sticky=E)
             self.submit_buttons.append(butSubmit)
 
@@ -93,10 +93,10 @@ class TestGUI(tk.Frame):
         
 
 
-    def submit_command(self, question, idx):
-        return lambda: self.evaluateAnswer(question, idx)
+    def submit_command(self, question, idx, test):
+        return lambda: self.evaluateAnswer(question, idx, test)
 
-    def evaluateAnswer(self, question, idx):
+    def evaluateAnswer(self, question, idx, test):
 
         answer = str(self.vars[idx].get())
         print("You chose " + str(answer))
@@ -109,6 +109,7 @@ class TestGUI(tk.Frame):
             self.incorrectLabels[idx].grid(row=idx * 10 + 3, column=1, sticky=W)
 
         self.submit_buttons[idx].grid_remove()
+        test.addQuestionResult(USER_ID, question)
         
     def submitTest(self):
         pass
